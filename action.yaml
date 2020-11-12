@@ -1,0 +1,76 @@
+name: Install/Update Cloudify Deployment
+author: Isaac Shabtay
+description: |
+  Creates a deployment, or updates an existing one
+branding:
+  icon: cloud
+  color: white
+inputs:
+  environment-name:
+    description: Name of Cloudify environment to create
+    required: true
+  blueprint-id:
+    description: |
+      ID of blueprint to create the deployment from (if deployment doesn't
+      exist yet), or to update the deployment to (if already exists)
+    required: true
+  delete-old-blueprint:
+    description: |
+      If true, and the deployment was updated, then delete the old blueprint
+      in case no other deployments exist for it
+    default: "-"
+  inputs-file:
+    description: Path to YAML/JSON inputs file
+    required: false
+    default: "-"
+  skip-install:
+    description: |
+      If this is a deployment update, then skip the `install` operations
+    default: "false"
+  skip-uninstall:
+    description: |
+      If this is a deployment update, then skip the `uninstall` operations
+    default: "false"
+  skip-reinstall:
+    description: |
+      If this is a deployment update, then skip reinstalling node instances
+      that require re-installation
+    default: "false"
+  install-first:
+    description: |
+      If this is a deployment update, then run `install` operations before
+      `uninstall` ones
+    default: "false"
+  outputs-file:
+    description: |
+      Path to JSON file to receive the Cloudify environment's outputs
+      and capabilities
+    required: false
+    default: "-"
+outputs:
+  environment-data:
+    description: The Cloudify environment's outputs and capabilties
+runs:
+  using: docker
+  image: docker://cloudifyplatform/cloudify-cli:5.0.5.1
+  entrypoint: cfyci
+  args:
+    - install-or-update
+    - '--name'
+    - ${{ inputs.environment-name }}
+    - '--blueprint-id'
+    - ${{ inputs.blueprint-id }}
+    - '--delete-old-blueprint'
+    - ${{ inputs.delete-old-blueprint }}
+    - '--inputs'
+    - ${{ inputs.inputs-file }}
+    - '--skip-install'
+    - ${{ inputs.skip-install }}
+    - '--skip-uninstall'
+    - ${{ inputs.skip-uninstall }}
+    - '--skip-reinstall'
+    - ${{ inputs.skip-reinstall }}
+    - '--install-first'
+    - ${{ inputs.install-first }}
+    - '--outputs-file'
+    - ${{ inputs.outputs-file }}
