@@ -7,7 +7,7 @@ branding:
   color: white
 inputs:
   environment-name:
-    description: Name of Cloudify environment to create
+    description: Name of Cloudify environment to create or update
     required: true
   blueprint-id:
     description: |
@@ -18,6 +18,7 @@ inputs:
     description: |
       If true, and the deployment was updated, then delete the old blueprint
       in case no other deployments exist for it
+    required: false
     default: "-"
   inputs-file:
     description: Path to YAML/JSON inputs file
@@ -26,20 +27,24 @@ inputs:
   skip-install:
     description: |
       If this is a deployment update, then skip the `install` operations
+    required: false
     default: "false"
   skip-uninstall:
     description: |
       If this is a deployment update, then skip the `uninstall` operations
+    required: false
     default: "false"
   skip-reinstall:
     description: |
       If this is a deployment update, then skip reinstalling node instances
       that require re-installation
+    required: false
     default: "false"
   install-first:
     description: |
       If this is a deployment update, then run `install` operations before
       `uninstall` ones
+    required: false
     default: "false"
   outputs-file:
     description: |
@@ -62,7 +67,7 @@ runs:
     - ${{ inputs.blueprint-id }}
     - '--delete-old-blueprint'
     - ${{ inputs.delete-old-blueprint }}
-    - '--inputs'
+    - '--inputs-file'
     - ${{ inputs.inputs-file }}
     - '--skip-install'
     - ${{ inputs.skip-install }}
