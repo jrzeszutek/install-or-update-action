@@ -34,7 +34,7 @@ jobs:
   test_job:
     steps:
       - name: Get Environment Data
-        uses: cloudify-cosmo/install-or-update@v1.0
+        uses: cloudify-cosmo/install-or-update@v1.1
         with:
           environment-name: "my-environment"
           blueprint-id: "my-blueprint"
