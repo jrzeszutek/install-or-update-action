@@ -24,6 +24,13 @@ inputs:
     description: Path to YAML/JSON inputs file
     required: false
     default: "-"
+  labels:
+    description: |
+      A labels list of the form <key>:<value>,<key>:<value>. 
+      Any comma and colon in <value> must be escaped with \. 
+      The labels’ keys are saved in lowercase.
+    required: false
+    default: "-"
   skip-install:
     description: |
       If this is a deployment update, then skip the `install` operations
@@ -69,6 +76,8 @@ runs:
     - ${{ inputs.delete-old-blueprint }}
     - '--inputs-file'
     - ${{ inputs.inputs-file }}
+    - '--labels'
+    - ${{ inputs.labels }}
     - '--skip-install'
     - ${{ inputs.skip-install }}
     - '--skip-uninstall'
