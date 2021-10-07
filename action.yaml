@@ -64,7 +64,7 @@ outputs:
     description: The Cloudify environment's outputs and capabilties
 runs:
   using: docker
-  image: docker://jrzeszutek/cfyci:latest
+  image: docker://jrzeszutek/cfyci:6.2.0
   entrypoint: cfyci
   args:
     - install-or-update
